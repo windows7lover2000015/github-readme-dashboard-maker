@@ -17,17 +17,12 @@
 <body class="min-h-screen py-10 px-4 flex flex-col items-center">
 
     <div class="max-w-4xl w-full space-y-8">
-        
-        <!-- Header -->
         <div class="text-center space-y-2">
             <h1 class="text-3xl font-extrabold text-white tracking-tight">Customize your dashboard</h1>
             <p class="text-sm text-gray-400">Pick a theme, toggle sections on/off, and get a shareable SVG link for any README.</p>
         </div>
 
-        <!-- Customization Studio Box -->
         <div class="glass-card p-6 space-y-6">
-            
-            <!-- Username & Generate -->
             <div class="flex flex-col sm:flex-row gap-4 items-center justify-between border-b border-gray-800 pb-5">
                 <div class="w-full sm:w-1/2">
                     <label class="block text-xs font-medium text-gray-400 mb-1">GitHub Username</label>
@@ -39,9 +34,8 @@
                 </button>
             </div>
 
-            <!-- Theme Picker Grid -->
             <div>
-                <label class="block text-xs font-medium text-gray-400 mb-3">SVG Theme <span class="text-gray-600">— preview updates instantly</span></label>
+                <label class="block text-xs font-medium text-gray-400 mb-3">SVG Theme</label>
                 <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
                     <div onclick="setTheme('midnight', this)" class="theme-btn active p-3 rounded-lg bg-[#0d1117] border border-gray-800 flex flex-col justify-between h-20">
                         <span class="text-xs font-bold text-white">Midnight</span>
@@ -66,9 +60,8 @@
                 </div>
             </div>
 
-            <!-- Dashboard Sections Toggles -->
             <div class="border-t border-gray-800 pt-4">
-                <label class="block text-xs font-medium text-gray-400 mb-3">Dashboard Sections <span class="text-gray-600">— toggle sections on/off</span></label>
+                <label class="block text-xs font-medium text-gray-400 mb-3">Dashboard Sections</label>
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
                     <label class="flex items-center justify-between p-2.5 bg-[#030712] rounded-lg border border-gray-800 cursor-pointer">
                         <span>Profile Card</span> <input type="checkbox" id="t_profile" checked onchange="updateDashboard()" class="accent-blue-500">
@@ -84,10 +77,8 @@
                     </label>
                 </div>
             </div>
-
         </div>
 
-        <!-- Live Preview Canvas -->
         <div class="glass-card p-6 flex flex-col items-center justify-center space-y-4">
             <div class="w-full flex items-center justify-between text-xs text-gray-400 border-b border-gray-800 pb-3">
                 <span class="uppercase tracking-wider font-semibold">Live Preview</span>
@@ -98,7 +89,6 @@
             </div>
         </div>
 
-        <!-- Export Embed Links -->
         <div class="glass-card p-6 space-y-3">
             <h2 class="text-sm font-semibold text-white">Shareable SVG URL</h2>
             <div class="relative">
@@ -108,33 +98,31 @@
                 </button>
             </div>
         </div>
-
     </div>
 
     <script>
         let currentTheme = 'midnight';
-
         function setTheme(themeName, element) {
             document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
             element.classList.add('active');
             currentTheme = themeName;
             updateDashboard();
         }
-
         function updateDashboard() {
             const username = document.getElementById('usernameInput').value.trim() || 'octocat';
             const profile = document.getElementById('t_profile').checked;
             const stats = document.getElementById('t_stats').checked;
             const langs = document.getElementById('t_langs').checked;
             const repos = document.getElementById('t_repos').checked;
-
             const query = `username=${username}&theme=${currentTheme}&profile=${profile}&stats=${stats}&langs=${langs}&repos=${repos}`;
             const fullUrl = `${window.location.origin}/api/card?${query}`;
-
             document.getElementById('cardPreview').src = fullUrl;
             document.getElementById('shareUrl').value = `![GitHub Dashboard](${fullUrl})`;
         }
-
+        function copyLink() {
+            navigator.clipboard.writeText(document.getElementById('shareUrl').value);
+            alert('Copied link!');
+        }
         window.onload = updateDashboard;
     </script>
 </body>
