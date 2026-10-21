@@ -1,6 +1,6 @@
 export default async function handler(req, res) {
   const {
-    username = 'octocat',
+    username = 'windows7lover2000015',
     theme = 'midnight',
     profile = 'true',
     stats = 'true',
@@ -19,7 +19,7 @@ export default async function handler(req, res) {
 
     const user = await userRes.json();
 
-    // Fetch avatar as base64 so it never breaks inside SVG rendering on GitHub READMEs
+    // Fetch avatar as base64 to ensure it renders reliably in READMEs
     let avatarBase64 = '';
     try {
       const imgRes = await fetch(user.avatar_url);
@@ -95,16 +95,9 @@ export default async function handler(req, res) {
         ${langs === 'true' ? `
           <g transform="translate(20, ${currentY})">
             <rect width="450" height="95" rx="10" fill="${t.card}" stroke="${t.border}"/>
-            <text x="20" y="25" class="section-title">Language breakdown</text>
-            <text x="20" y="52" class="lang-text">JavaScript</text>
-            <rect x="110" y="42" width="250" height="8" rx="4" fill="${t.border}"/>
-            <rect x="110" y="42" width="170" height="8" rx="4" fill="#f1e05a"/>
-            <text x="375" y="52" class="lang-text">68%</text>
-
-            <text x="20" y="76" class="lang-text">Python</text>
-            <rect x="110" y="66" width="250" height="8" rx="4" fill="${t.border}"/>
-            <rect x="110" y="66" width="70" height="8" rx="4" fill="#3572A5"/>
-            <text x="375" y="76" class="lang-text">32%</text>
+            <text x="20" y="25" class="section-title">Profile Overview</text>
+            <text x="20" y="52" class="lang-text">Bio: ${user.bio || 'Open source developer'}</text>
+            <text x="20" y="76" class="lang-text">Location: ${user.location || 'Global'}</text>
           </g>
         ` : ''}
         ${langs === 'true' ? (() => { currentY += 110; return ''; })() : ''}
@@ -112,9 +105,9 @@ export default async function handler(req, res) {
         ${repos === 'true' ? `
           <g transform="translate(20, ${currentY})">
             <rect width="450" height="80" rx="10" fill="${t.card}" stroke="${t.border}"/>
-            <text x="20" y="25" class="section-title">Top repository</text>
-            <text x="20" y="50" class="name" style="font-size: 13px;">📁 github-readme-dashboard</text>
-            <text x="20" y="66" class="handle">Live tracking metrics generator for developer profiles.</text>
+            <text x="20" y="25" class="section-title">Profile Link</text>
+            <text x="20" y="50" class="name" style="font-size: 13px;">🔗 github.com/${user.login}</text>
+            <text x="20" y="66" class="handle">Public GitHub Profile Dashboard</text>
           </g>
         ` : ''}
       </svg>
