@@ -1,6 +1,6 @@
 export default async function handler(req, res) {
   const {
-    username = 'windows7lover2000015',
+    username = 'octocat',
     theme = 'midnight',
     profile = 'true',
     stats = 'true',
