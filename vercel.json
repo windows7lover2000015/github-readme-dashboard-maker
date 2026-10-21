@@ -2,8 +2,5 @@
   "version": 2,
   "builds": [
     { "src": "api/card.js", "use": "@vercel/node" }
-  ],
-  "routes": [
-    { "src": "/api/card", "destination": "/api/card.js" }
   ]
 }
